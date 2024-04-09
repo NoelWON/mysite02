@@ -15,16 +15,7 @@
 </head>
 <body>
 	<div id="container">
-		<div id="header">
-			<h1>MySite</h1>
-			<ul>
-				<li><a href="/mysite02/user?a=Loginform">로그인</a><li>
-				<li><a href="/mysite02/user?a=joinform">회원가입</a><li>
-				<li><a href="/mysite02/user?a=updateform">회원정보수정</a><li>
-				<li><a href="/mysite02/user?a=Logoutform">로그아웃</a><li>
-				<li>님 안녕하세요 ^^;</li>
-			</ul>
-		</div>
+		<jsp:include page="/WEB-INF/views/includes/header.jsp"/>
 		<div id="content">
 			<div id="user">
 				<form id="login-form" name="loginform" method="post" action="/mysite02/user?a=login">

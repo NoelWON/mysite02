@@ -118,4 +118,55 @@ public class UserDao {
 		return result;
 	}
 
+
+	public UserVo findByNo(Long no) {
+		UserVo result = null;
+		ResultSet rs = null;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		
+		try {
+			Class.forName("org.mariadb.jdbc.Driver");
+			String url = "jdbc:mariadb://192.168.100.8:3307/webdb?chatset=utf8";
+			conn = DriverManager.getConnection(url,"webdb","webdb");
+			System.out.println("connection success!");
+			String sql = "select no,name,email,password,gender from user where no=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setLong(1, no);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {				
+				no = rs.getLong(1);
+				String name = rs.getString(2);
+				String email = rs.getString(3);
+				String password = rs.getString(4);
+				String gender = rs.getString(5);
+				result = new UserVo();
+				result.setName(name);
+				result.setEmail(email);
+				result.setPassword(password);
+				result.setGender(gender);
+			}
+		} catch (ClassNotFoundException e) {
+			System.out.println("shit Driver loading fail:   " + e);
+		} catch (SQLException e) {
+			System.out.println("Error:   " + e);
+		}finally {
+			try {
+				if(rs != null) {
+					rs.close();
+				}
+				if(pstmt != null) {
+					pstmt.close();
+				}
+				if(conn != null) {
+					conn.close();
+				}	
+			}catch(SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return result;
+	}
+
+
 }

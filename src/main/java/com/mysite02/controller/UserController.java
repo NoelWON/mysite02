@@ -89,6 +89,36 @@ public class UserController extends HttpServlet {
 			response.sendRedirect("/mysite02/main");
 			
 		}
+		// 로그아웃 httpsession 지우는 것
+		else if(action.equals("logout")) {
+			HttpSession session = request.getSession();
+			
+			// userVo를 날리고 싶은것
+			session.removeAttribute("authUser");
+			// session을 없애는 것
+			session.invalidate();
+			
+			response.sendRedirect("/mysite02/main");
+		}
+		// 업데이트 과제
+		else if(action.equals("updateform")) {
+			// 로그인된 유저의 정보를 가져와야 한다.( no, name이 담겨 있다.)
+			HttpSession session = request.getSession();
+			UserVo authUser = (UserVo)session.getAttribute("authUser");
+			Long no = authUser.getNo();
+			
+			System.out.println("test: "+authUser.getNo());
+			
+			UserVo userVo = new UserDao().findByNo(no);
+			request.setAttribute("userVo", userVo);
+			
+			System.out.println("email: "+userVo.getEmail());
+			System.out.println("name: "+userVo.getName());
+			
+			
+			request.getRequestDispatcher("/WEB-INF/views/user/updateform.jsp")
+			.forward(request, response);
+		}
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
