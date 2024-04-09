@@ -20,14 +20,14 @@ public class UserController extends HttpServlet {
 		request.setCharacterEncoding("utf-8");
 		
 		String action = request.getParameter("a");
-
+		
+		// 회원가입
 		if (action.equals("joinform")) {
 			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/user/joinform.jsp");
 			rd.forward(request, response);
-		}else if (action.equals("joinsuccess")) {
-			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/user/joinsuccess.jsp");
-			rd.forward(request, response);
-		}else if(action.equals("join")) {
+		}
+		// 회원가입폼에서 가입하기 요청
+		else if(action.equals("join")) {
 			// input의 name 속성을 파라미터로 갖는다
 			String name = request.getParameter("name");
 			String email = request.getParameter("email");
@@ -50,6 +50,34 @@ public class UserController extends HttpServlet {
 			// insert delate update 요청은 응답할 때 페이지가 유지 되면 안된다. 새로고침했을 때 중복으로 작동한다.
 			// redirect로 url을 바꿔준다.
 			response.sendRedirect("/mysite02/user?a=joinsuccess");
+		}
+		// 회원가입 성공시 리다이렉트 요청
+		else if (action.equals("joinsuccess")) {
+			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/user/joinsuccess.jsp");
+			rd.forward(request, response);
+		}
+		// 로그인 창 요청
+		else if(action.equals("Loginform")) {
+			request.getRequestDispatcher("/WEB-INF/views/user/loginform.jsp")
+			.forward(request, response);
+		}
+		// 로그인 버튼 누르면 가는 것
+		else if(action.equals("login")) {
+			//데이터베이스에서 유저 확인 하는 것
+			String email = request.getParameter("email");
+			String password = request.getParameter("password");
+			
+			UserVo authUser = new UserDao().findByEmailAndPassword(email, password);
+			if(authUser == null) {
+				request.getRequestDispatcher("/WEB-INF/views/user/loginform.jsp")
+				.forward(request, response);
+				return;
+			}
+			// else를 쓰지 않기 위해서 return으로 끝내고 다음 코드로 진행
+			// 로그인 처리
+			System.out.println("로그인 처리 진행");
+			
+
 		}
 	}
 
