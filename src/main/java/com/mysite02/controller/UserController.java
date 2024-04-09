@@ -7,6 +7,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.mysite02.Dao.UserDao;
 import com.mysite02.uservo.UserVo;
@@ -68,7 +69,12 @@ public class UserController extends HttpServlet {
 			String password = request.getParameter("password");
 			
 			UserVo authUser = new UserDao().findByEmailAndPassword(email, password);
+			// 로그인 실패했을 경우 
 			if(authUser == null) {
+				// jsp에서 사용할 수 있게 key, value 를 달아준다.
+				request.setAttribute("result", "fail");
+				request.setAttribute("email", email);
+				
 				request.getRequestDispatcher("/WEB-INF/views/user/loginform.jsp")
 				.forward(request, response);
 				return;
@@ -76,8 +82,12 @@ public class UserController extends HttpServlet {
 			// else를 쓰지 않기 위해서 return으로 끝내고 다음 코드로 진행
 			// 로그인 처리
 			System.out.println("로그인 처리 진행");
+			HttpSession session = request.getSession(true);
+			session.setAttribute("authUser", authUser);
 			
-
+			//main으로 리다이렉트
+			response.sendRedirect("/mysite02/main");
+			
 		}
 	}
 

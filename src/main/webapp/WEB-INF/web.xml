@@ -29,4 +29,14 @@
     <servlet-name>UserController</servlet-name>
     <url-pattern>/user</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>CookieServlet</display-name>
+    <servlet-name>CookieServlet</servlet-name>
+    <servlet-class>com.mysite02.controller.CookieServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>CookieServlet</servlet-name>
+    <url-pattern>/cookie</url-pattern>
+  </servlet-mapping>
 </web-app>
