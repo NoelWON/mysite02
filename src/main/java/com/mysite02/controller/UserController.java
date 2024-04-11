@@ -104,7 +104,7 @@ public class UserController extends HttpServlet {
 		// 업데이트 과제
 		else if(action.equals("updateform")) {
 			// 로그인된 유저의 정보를 가져와야 한다.( no, name이 담겨 있다.)
-			HttpSession session = request.getSession();
+			HttpSession session = request.getSession(true);
 			UserVo authUser = (UserVo)session.getAttribute("authUser");
 			Long no = authUser.getNo();
 			
