@@ -22,7 +22,8 @@ public class UserDao {
 			Class.forName("org.mariadb.jdbc.Driver");
 			// 1. 워크벤치와 연결을 해야한다. (서버(IP+port+스키마이름), 계정 , 비밀번호 )
 			// connection interface
-			String url = "jdbc:mariadb://192.168.100.8:3307/webdb?chatset=utf8";
+			String url = "jdbc:mariadb://192.168.100.6:3307/webdb?chatset=utf8";
+//			String url = "jdbc:mariadb://192.168.0.33:3307/webdb?chatset=utf8";
 			conn = DriverManager.getConnection(url,"webdb","webdb");
 			System.out.println("connection success!");
 			// 2. sql 작성 & 실행 
@@ -70,7 +71,8 @@ public class UserDao {
 		
 		try {
 			Class.forName("org.mariadb.jdbc.Driver");
-			String url = "jdbc:mariadb://192.168.100.8:3307/webdb?chatset=utf8";
+			String url = "jdbc:mariadb://192.168.100.6:3307/webdb?chatset=utf8";
+//			String url = "jdbc:mariadb://192.168.0.33:3307/webdb?chatset=utf8";
 			conn = DriverManager.getConnection(url,"webdb","webdb");
 			System.out.println("connection success!");
 			
@@ -127,7 +129,8 @@ public class UserDao {
 		
 		try {
 			Class.forName("org.mariadb.jdbc.Driver");
-			String url = "jdbc:mariadb://192.168.100.8:3307/webdb?chatset=utf8";
+			String url = "jdbc:mariadb://192.168.100.6:3307/webdb?chatset=utf8";
+//			String url = "jdbc:mariadb://192.168.0.33:3307/webdb?chatset=utf8";
 			conn = DriverManager.getConnection(url,"webdb","webdb");
 			System.out.println("connection success!");
 			String sql = "select no,name,email,password,gender from user where no=?";
@@ -168,5 +171,55 @@ public class UserDao {
 		return result;
 	}
 
-
+	public Boolean update(UserVo vo) {
+		Boolean result = false;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		
+		try {
+			Class.forName("org.mariadb.jdbc.Driver");
+			String url = "jdbc:mariadb://192.168.100.6:3307/webdb?chatset=utf8";
+//			String url = "jdbc:mariadb://192.168.0.33:3307/webdb?chatset=utf8";
+			conn = DriverManager.getConnection(url,"webdb","webdb");
+			System.out.println("connection success!");
+			
+			if(vo.getPassword()==null || vo.getPassword()=="") {
+				String sql = "update user Set name = ?, gender = ? where no = ?";
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setString(1, vo.getName());
+				pstmt.setString(2, vo.getGender());
+				pstmt.setLong(3, vo.getNo());
+				
+				int count = pstmt.executeUpdate();
+				result = count == 1;
+			}else {
+				String sql = "update user Set name = ?, password = password(?), gender = ? where no = ?";
+				
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setString(1, vo.getName());
+				pstmt.setString(2, vo.getPassword());
+				pstmt.setString(3, vo.getGender());
+				pstmt.setLong(4, vo.getNo());
+				
+				int count = pstmt.executeUpdate();
+				result = count == 1;
+			}
+		}catch (ClassNotFoundException e) {
+			System.out.println("shit Driver loading fail:   " + e);
+		} catch (SQLException e) {
+			System.out.println("Error:   " + e);
+		}		finally {
+			try {
+				if(pstmt != null) {
+					pstmt.close();
+				}
+				if(conn != null) {
+					conn.close();
+				}	
+			}catch(SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return result;
+	}
 }

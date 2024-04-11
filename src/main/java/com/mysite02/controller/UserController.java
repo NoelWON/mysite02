@@ -21,6 +21,7 @@ public class UserController extends HttpServlet {
 		request.setCharacterEncoding("utf-8");
 		
 		String action = request.getParameter("a");
+		System.out.println(action);
 		
 		// 회원가입
 		if (action.equals("joinform")) {
@@ -117,6 +118,38 @@ public class UserController extends HttpServlet {
 			
 			
 			request.getRequestDispatcher("/WEB-INF/views/user/updateform.jsp")
+			.forward(request, response);
+		}
+		// 업데이트 시키기
+		else if(action.equals("update")) {
+			//where no = 번호 지정에 쓰기 위해
+			HttpSession session = request.getSession(true);
+			UserVo authUser = (UserVo)session.getAttribute("authUser");
+			Long no = authUser.getNo();
+			
+			// 이름 비밀번호 성별 name 속성 값 가져와야함
+			String name = request.getParameter("name");
+			String password = request.getParameter("password");
+			String gender = request.getParameter("gender");
+			
+			UserVo vo = new UserVo();
+			vo.setNo(no);
+			vo.setName(name);
+			vo.setPassword(password);
+			vo.setGender(gender);
+				
+			System.out.println(vo.getName()+" "+vo.getPassword()+" "+vo.getGender());
+				
+			// sql Dao 실행 
+			UserDao userDao = new UserDao();
+			// 조건 비밀번호 공석 일 때
+			userDao.update(vo);
+			
+			// 리다이렉트를 해줘야함
+			response.sendRedirect("/mysite02/user?a=updatesuccess");
+		}
+		else if(action.equals("updatesuccess")) {
+			request.getRequestDispatcher("/WEB-INF/views/user/updatesuccess.jsp")
 			.forward(request, response);
 		}
 	}
