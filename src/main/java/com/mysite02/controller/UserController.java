@@ -111,6 +111,9 @@ public class UserController extends HttpServlet {
 			System.out.println("test: "+authUser.getNo());
 			
 			UserVo userVo = new UserDao().findByNo(no);
+			// JSTL 에서는 userVo를 가져와서 바로 쓸 수 있다.
+			// JSP 에서는 userVo를 get 해서 써야 한다.
+			
 			request.setAttribute("userVo", userVo);
 			
 			System.out.println("email: "+userVo.getEmail());

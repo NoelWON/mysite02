@@ -22,7 +22,7 @@ public class UserDao {
 			Class.forName("org.mariadb.jdbc.Driver");
 			// 1. 워크벤치와 연결을 해야한다. (서버(IP+port+스키마이름), 계정 , 비밀번호 )
 			// connection interface
-			String url = "jdbc:mariadb://192.168.100.6:3307/webdb?chatset=utf8";
+			String url = "jdbc:mariadb://192.168.100.8:3307/webdb?chatset=utf8";
 //			String url = "jdbc:mariadb://192.168.0.33:3307/webdb?chatset=utf8";
 			conn = DriverManager.getConnection(url,"webdb","webdb");
 			System.out.println("connection success!");
@@ -71,7 +71,7 @@ public class UserDao {
 		
 		try {
 			Class.forName("org.mariadb.jdbc.Driver");
-			String url = "jdbc:mariadb://192.168.100.6:3307/webdb?chatset=utf8";
+			String url = "jdbc:mariadb://192.168.100.8:3307/webdb?chatset=utf8";
 //			String url = "jdbc:mariadb://192.168.0.33:3307/webdb?chatset=utf8";
 			conn = DriverManager.getConnection(url,"webdb","webdb");
 			System.out.println("connection success!");
@@ -129,7 +129,7 @@ public class UserDao {
 		
 		try {
 			Class.forName("org.mariadb.jdbc.Driver");
-			String url = "jdbc:mariadb://192.168.100.6:3307/webdb?chatset=utf8";
+			String url = "jdbc:mariadb://192.168.100.8:3307/webdb?chatset=utf8";
 //			String url = "jdbc:mariadb://192.168.0.33:3307/webdb?chatset=utf8";
 			conn = DriverManager.getConnection(url,"webdb","webdb");
 			System.out.println("connection success!");
@@ -178,7 +178,7 @@ public class UserDao {
 		
 		try {
 			Class.forName("org.mariadb.jdbc.Driver");
-			String url = "jdbc:mariadb://192.168.100.6:3307/webdb?chatset=utf8";
+			String url = "jdbc:mariadb://192.168.100.8:3307/webdb?chatset=utf8";
 //			String url = "jdbc:mariadb://192.168.0.33:3307/webdb?chatset=utf8";
 			conn = DriverManager.getConnection(url,"webdb","webdb");
 			System.out.println("connection success!");
