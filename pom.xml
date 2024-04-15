@@ -24,6 +24,23 @@
 
 	<build>
 		<finalName>mysite02</finalName>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<version>3.3.2</version>
+			</plugin>
+			<!-- 톰캣 플러그인 설정 deploy를 위한-->
+			<plugin>
+				<groupId>org.apache.tomcat.maven</groupId>
+				<artifactId>tomcat7-maven-plugin</artifactId>
+				<version>2.2</version>
+				<configuration>
+					<url>${tomcat.deploy.url}</url>
+					<server>bit2024-tomcat</server>
+				</configuration>
+			</plugin>
+		</plugins>
 	</build>
 
 </project>
